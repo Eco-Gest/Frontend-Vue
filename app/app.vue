@@ -1,10 +1,8 @@
-<template>
-  <NuxtLayout>
-    <v-app>
-      <v-btn prepend-icon="$vuetify">
-        Button
-      </v-btn>
-    </v-app>
-  </NuxtLayout>
-</template>
+<script setup></script>
 
+<template>
+  <v-app>
+    <TheNavBar />
+    <NuxtPage />
+  </v-app>
+</template>

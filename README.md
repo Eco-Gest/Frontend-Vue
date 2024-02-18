@@ -110,3 +110,14 @@ or
 You should now have access to all Vuetify components and tools in Nuxt app.
 
 more info on https://vuetifyjs.com/en/
+
+### router
+Create a 'pages' folder and create our views. In the app.vue, simply add this code
+```
+<template>
+  <NuxtPage />
+</template>
+```
+NuxtPage is like a slot for our page to automatically go into
+
+more on routing https://nuxt.com/docs/getting-started/routing 
