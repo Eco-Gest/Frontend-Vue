@@ -17,7 +17,7 @@ module.exports = {
 
     },
     fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
+      sans: ['Open Sans', 'sans-serif'],
     },
     extend: {},
   },

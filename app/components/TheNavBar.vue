@@ -26,7 +26,7 @@
         </NuxtLink>
 
         <NuxtLink to="/challenge" exact active-class="text-primary" class="hover:text-primary justify-center">
-          <span class="material-icons">celebration</span>
+          <span class="material-icons">emoji_events</span>
         </NuxtLink>
 
         <NuxtLink to="/postcreate" exact active-class="text-primary" class="hover:text-primary bg-secondaryContainer rounded-md rounded-md p-3 flex justify-center">
@@ -69,11 +69,11 @@
     <nav class="fixed bottom-0 left-0 right-0 bg-surface2  md:hidden">
       <div class="flex justify-between text-onSurfaceVariant py-5 ">
         <NuxtLink to="/"  exact active-class="text-primary" class="w-1/5 hover:text-primary flex justify-center items-center">
-          <span class="material-icons">home</span> 
+          <span class="material-icons">home</span>
         </NuxtLink>
 
         <NuxtLink to="/challenge" exact active-class="text-primary" class="w-1/5 hover:text-primary flex justify-center items-center">
-          <span class="material-icons"> celebration</span> 
+          <span class="material-icons">emoji_events</span>
         </NuxtLink>
 
         <NuxtLink to="/postcreate" exact active-class="text-primary" class="w-1/5 hover:text-primary bg-secondaryContainer rounded-md p-3 flex justify-center items-center">
