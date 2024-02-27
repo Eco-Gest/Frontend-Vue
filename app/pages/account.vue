@@ -1,7 +1,9 @@
-<script setup></script>
-
 <template>
-  <h1>my profile</h1>
+  <Account />
 </template>
 
-<style></style>
+<script setup>
+definePageMeta({
+  name: 'Profil',
+})
+</script>

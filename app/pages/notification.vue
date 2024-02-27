@@ -1,9 +1,9 @@
 <template>
-  <h1>Home Page</h1>
+  <h1>notification</h1>
 </template>
 
 <script setup>
 definePageMeta({
-  name: 'Accueil',
+  name: 'Notifications',
 })
 </script>

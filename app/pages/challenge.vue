@@ -1,7 +1,9 @@
-<script setup></script>
-
 <template>
   <h1>Challenge</h1>
 </template>
 
-<style></style>
+<script setup>
+definePageMeta({
+  name: 'Mes défis & gestes',
+})
+</script>
