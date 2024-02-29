@@ -32,85 +32,6 @@ But otherwise, for most things, it's true,you probably will avoid this global fo
 
 Auto-import is cool but then you don't what you're using so for clarity it's interesting to keep importing stuffs manually at the top of the file. Try to keep your components folder as flat as possible and name them well.
 
-### Vuetify
-Vuetify is a way to use Material 3  . Vuetify is a no design skills required Open Source UI Library with beautifully handcrafted Vue Components.
-
-```
-npm i -D vuetify vite-plugin-vuetify
-npm i @mdi/font
-```
-
-Next, integrate the following entries into your nuxt.config.ts file:
-
-```
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
-export default defineNuxtConfig({
-  //...
-  build: {
-    transpile: ['vuetify'],
-  },
-  modules: [
-    (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
-        // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
-    },
-    //...
-  ],
-  vite: {
-    vue: {
-      template: {
-        transformAssetUrls,
-      },
-    },
-  },
-})
-```
-
-Nuxt allows you to change its Vite config by using its built-in hook vite:extendConfig. In its callback function, add the Vuetify plugin to the array of Vite plugins. To resolve relative asset URLs that are passed to Vuetify components such as VImg (e.g. ~/assets/img/some.png) the transformAssetUrls function needs to be added in the vite entry .
-
-In the next step, initialize Vuetify and add it to the main Vue app instance. This can be done in the plugins folder as any plugin that is placed in this folder will be automatically loaded by Nuxt at startup.
-
-```
- ~/plugins/vuetify.ts
-// import this after install `@mdi/font` package
-import '@mdi/font/css/materialdesignicons.css'
-
-import 'vuetify/styles'
-import { createVuetify } from 'vuetify'
-
-export default defineNuxtPlugin((app) => {
-  const vuetify = createVuetify({
-    // ... your configuration
-  })
-  app.vueApp.use(vuetify)
-})
-```
-Finally, add Vuetify’s root VApp component either in ~/app.vue or ~/layouts/default.vue, for example:
-```
- app.vue
-<template>
-  <NuxtLayout>
-    <v-app>
-      <NuxtPage />
-    </v-app>
-  </NuxtLayout>
-</template>
-```
-or
-```
- ~/layouts/default.vue
-<template>
-  <v-app>
-    <!-- .... -->
-  </v-app>
-</template>
-```
-You should now have access to all Vuetify components and tools in Nuxt app.
-
-more info on https://vuetifyjs.com/en/
-
 ### router
 Create a 'pages' folder and create our views. In the app.vue, simply add this code
 ```
@@ -121,3 +42,20 @@ Create a 'pages' folder and create our views. In the app.vue, simply add this co
 NuxtPage is like a slot for our page to automatically go into
 
 more on routing https://nuxt.com/docs/getting-started/routing 
+
+### Tailwind 
+Tailwind CSS is a utility-first CSS framework that provides a set of low-level utility classes to build designs directly in your markup. Unlike traditional CSS frameworks that offer pre-designed components, Tailwind focuses on providing a flexible set of atomic utility classes that you can compose to create your own custom designs.
+
+Here's a simple example of how you might use Tailwind classes in HTML:
+
+```html
+<div class="bg-blue-500 p-4">
+  <p class="text-white font-bold">This is a blue box with white text.</p>
+</div>
+```
+
+In this example, bg-blue-500 sets the background color to a shade of blue, p-4 adds padding, and text-white font-bold styles the text. By combining these classes, you can create diverse and responsive designs directly in your markup.
+
+more about on https://tailwindcss.com/docs/installation
+
+for Ecogest : in app/tailwind.config.js you can put specific variables like the font or the color. So far only used colors from our palette as been put, you can pick the color to use from material-theme.json.
