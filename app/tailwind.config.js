@@ -10,7 +10,11 @@ module.exports = {
   ],
   theme: {
     colors: {
+      'white': '#FFFFFF',
+      'black': '#000000',
+      'background': '#F9FAF4',
       'primary': '#326941',
+      'primaryHover': '#147945',
       'surface2': '#EBEFDA',
       'onSurfaceVariant': '#414941',
       'secondaryContainer': '#D3E8D2',
