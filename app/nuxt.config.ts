@@ -1,24 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
-  //...
-  build: {
-    transpile: ['vuetify'],
+  devtools: { enabled: true },
+  css: ['~/assets/css/main.css'],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
   },
   modules: [
-    (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig', (config) => {
-        // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
-    },
-    //...
+    ['@nuxtjs/google-fonts', {
+    families: {
+      'Open Sans': true
+    }
+  }],
   ],
-  vite: {
-    vue: {
-      template: {
-        transformAssetUrls,
-      },
+  app: {
+    head: {
+      link: [
+        // Include Google Fonts Material Icons CDN
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0' },
+      ],
     },
   },
 })
