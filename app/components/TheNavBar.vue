@@ -59,7 +59,12 @@
               <span class="material-icons">notifications</span>
             </NuxtLink>
 
-            <NuxtLink to="/account" exact active-class="text-primary" class="hover:text-primary justify-center">
+            <!-- <NuxtLink to="/account" exact active-class="text-primary" class="hover:text-primary justify-center">
+              <span class="material-icons">person</span>
+            </NuxtLink> -->
+            
+            <!-- TEMPORARY USER LOGOUT -->
+            <NuxtLink @click="logout" exact active-class="text-primary" class="hover:text-primary justify-center">
               <span class="material-icons">person</span>
             </NuxtLink>
           </div>
@@ -114,8 +119,19 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
+    import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
+    import { useAuthStore } from '~/store/auth'; // import the auth store we just created
+
+    const router = useRouter();
+
+
+    const { logUserOut } = useAuthStore(); // use authenticateUser action from  auth store
+    const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+
+    const logout = () => {
+    logUserOut();
+    router.push('/login');
+    };
 </script>
 
-<style>
-</style>

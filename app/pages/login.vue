@@ -54,8 +54,8 @@
       const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
 
       const user = ref({
-        username: 'kminchelle', 
-        password: '0lelplR',
+        email: 'eleonore@ecogest.dev', 
+        password: 'Password:123',
       });
       const router = useRouter();
 
