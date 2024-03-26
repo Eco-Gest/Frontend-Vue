@@ -59,3 +59,8 @@ In this example, bg-blue-500 sets the background color to a shade of blue, p-4 a
 more about on https://tailwindcss.com/docs/installation
 
 for Ecogest : in app/tailwind.config.js you can put specific variables like the font or the color. So far only used colors from our palette as been put, you can pick the color to use from material-theme.json.
+
+http://localhost:8080/api
+
+"username": "atuny0",
+"password": "9uQFF1Lh",

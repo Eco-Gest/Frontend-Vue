@@ -14,6 +14,7 @@ export default defineNuxtConfig({
       'Open Sans': true
     }
   }],
+  '@pinia/nuxt',
   ],
   app: {
     head: {

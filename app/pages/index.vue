@@ -2,8 +2,9 @@
   <h1>Home Page</h1>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 definePageMeta({
   name: 'Accueil',
+  middleware: 'auth'
 })
 </script>
