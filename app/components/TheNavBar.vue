@@ -121,17 +121,15 @@
 
 <script lang="ts" setup>
     import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
-    import { useAuthStore } from '~/store/auth'; // import the auth store we just created
-
+    import { useUserStore } from '~~/store/user'
     const router = useRouter();
-
-
-    const { logUserOut } = useAuthStore(); // use authenticateUser action from  auth store
-    const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+    const userStore = useUserStore();
 
     const logout = () => {
-    logUserOut();
+    userStore.logout();
+    localStorage.removeItem('token');
     router.push('/login');
     };
 </script>
 
+~/store/user

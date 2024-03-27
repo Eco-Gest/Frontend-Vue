@@ -20,18 +20,20 @@
         </div>
 
         <!-- Password Input -->
-        <div class="mb-2 w-full">
+        <div class="relative mb-2 w-full">
           <label for="password" class="block mb-2 text-sm">Mot de passe</label>
-          <input v-model="formData.password" type="password" id="password" class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 "               :class="{
+          <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" id="password" class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 " :class="{
                 ' border-error focus:border-error': v$.password.$error,
                 'border-[#42d392]': !v$.password.$invalid,
               }"
               @change="v$.password.$touch" placeholder="•••••••••" required />
-          <span class="text-xs text-error" v-if="v$.password.$error">{{
-            v$.password.$errors[0].$message
-          }}</span>
+          <span class="text-xs text-error" v-if="v$.password.$error">{{ v$.password.$errors[0].$message }}</span>
+          <!-- Eye Icon -->
+          <div class="absolute top-9 right-0 flex items-center pr-2 cursor-pointer" @click="toggleShowPassword">
+            <span class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
+          </div>
         </div>
-        <div v-if="error" class="text-error py-3 px-4 bg-errorContainer">{{ error }}</div>
+        <div v-if="errors" class="text-error py-3 px-4 bg-errorContainer">{{ errors }}</div>
         <!-- Forgot Password Link -->
         <div class="mb-2 text-center">
           <NuxtLink to="/forgot-password" class="text-sm text-primary">Mot de passe oublié ?</NuxtLink>
@@ -57,19 +59,26 @@
     })
 
       import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
-      import { useAuthStore } from '~/store/auth'; // import the auth store we just created
+      import axios from 'axios';
+      import { useUserStore } from '~~/store/user';
       import { useVuelidate } from '@vuelidate/core';
       import { required, email, sameAs, minLength, helpers } from '@vuelidate/validators';
 
-      const { authenticateUser} = useAuthStore(); // use authenticateUser action from  auth store
-
-      const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+      const userStore = useUserStore();
+      const router = useRouter();
 
       const formData = reactive({
         email: '',
         username: '',
         password: '',
       });
+
+      const errors = ref('');
+      const showPassword = ref(false);
+
+      const toggleShowPassword = () => {
+        showPassword.value = !showPassword.value;
+      };
 
       const rules = computed(() => {
         return {
@@ -84,23 +93,23 @@
       });
 
       const v$ = useVuelidate(rules, formData);
-
-      const router = useRouter();
-
-      let error = ref('');
-
+      
       const login = async () => {
         v$.value.$validate();
         if (!v$.value.$error) {
           try {
-            await authenticateUser(formData); // call authenticateUser and pass the user object
-            // redirect to homepage if user is authenticated
-            router.push('/');
-          } catch (err) {
-            console.error('Error caught during authentication:', err); // Log the error for debugging
-            error.value = 'Email ou mot de passe incorrect'; // Set error message if authentication fails
-            console.log('Error message set:', error.value); // Log the error message for debugging
-
+            console.log('je rentre dans le try');
+            await userStore.login(formData);
+            const token = window.localStorage.getItem('token');
+            if (token) {
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.access_token;
+            }
+            console.log('je rentre dans la fin de try');
+            router.push('/')
+          } catch (error) {
+            console.log('je rentre dans le catch');
+            console.log(error);
+              errors.value  = 'Email ou mot de passe incorrect';
           }
         }
       };
