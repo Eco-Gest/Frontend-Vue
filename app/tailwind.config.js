@@ -18,7 +18,8 @@ module.exports = {
       'surface2': '#EBEFDA',
       'onSurfaceVariant': '#414941',
       'secondaryContainer': '#D3E8D2',
-
+      'error': '#BA1A1A',
+      'errorContainer': '#FFDAD6',
     },
     fontFamily: {
       sans: ['Open Sans', 'sans-serif'],

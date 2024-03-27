@@ -13,15 +13,25 @@
         <!-- Email Input -->
         <div class="mb-2 w-full">
           <label for="email" class="block mb-2 text-sm font-medium">Email</label>
-          <input type="email" id="email" class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 " placeholder="Entrez votre Email" required />
+          <input v-model="formData.email" type="email" id="email" class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 " :class="{'border-error focus:border-error': v$.email.$error,'border-[#42d392] ': !v$.email.$invalid,}" @change="v$.email.$touch" placeholder="Entrez votre Email" required />
+          <span class="text-xs text-error" v-if="v$.email.$error">{{
+            v$.email.$errors[0].$message
+          }}</span>
         </div>
 
         <!-- Password Input -->
         <div class="mb-2 w-full">
           <label for="password" class="block mb-2 text-sm">Mot de passe</label>
-          <input type="password" id="password" class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 " placeholder="•••••••••" required />
+          <input v-model="formData.password" type="password" id="password" class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 "               :class="{
+                ' border-error focus:border-error': v$.password.$error,
+                'border-[#42d392]': !v$.password.$invalid,
+              }"
+              @change="v$.password.$touch" placeholder="•••••••••" required />
+          <span class="text-xs text-error" v-if="v$.password.$error">{{
+            v$.password.$errors[0].$message
+          }}</span>
         </div>
-    
+        <div v-if="error" class="text-error py-3 px-4 bg-errorContainer">{{ error }}</div>
         <!-- Forgot Password Link -->
         <div class="mb-2 text-center">
           <NuxtLink to="/forgot-password" class="text-sm text-primary">Mot de passe oublié ?</NuxtLink>
@@ -48,22 +58,50 @@
 
       import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
       import { useAuthStore } from '~/store/auth'; // import the auth store we just created
+      import { useVuelidate } from '@vuelidate/core';
+      import { required, email, sameAs, minLength, helpers } from '@vuelidate/validators';
 
-      const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
+      const { authenticateUser} = useAuthStore(); // use authenticateUser action from  auth store
 
       const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
 
-      const user = ref({
-        email: 'eleonore@ecogest.dev', 
-        password: 'Password:123',
+      const formData = reactive({
+        email: '',
+        username: '',
+        password: '',
       });
+
+      const rules = computed(() => {
+        return {
+          email: {
+            required: helpers.withMessage('email requis', required),
+            email: helpers.withMessage('format d\'email invalide', email),
+          },
+          password: {
+            required: helpers.withMessage('mot de passe requis', required),
+          },
+        };
+      });
+
+      const v$ = useVuelidate(rules, formData);
+
       const router = useRouter();
 
+      let error = ref('');
+
       const login = async () => {
-        await authenticateUser(user.value); // call authenticateUser and pass the user object
-        // redirect to homepage if user is authenticated
-        if (authenticated) {
-          router.push('/');
+        v$.value.$validate();
+        if (!v$.value.$error) {
+          try {
+            await authenticateUser(formData); // call authenticateUser and pass the user object
+            // redirect to homepage if user is authenticated
+            router.push('/');
+          } catch (err) {
+            console.error('Error caught during authentication:', err); // Log the error for debugging
+            error.value = 'Email ou mot de passe incorrect'; // Set error message if authentication fails
+            console.log('Error message set:', error.value); // Log the error message for debugging
+
+          }
         }
       };
   </script>
