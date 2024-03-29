@@ -13,13 +13,10 @@ export const useUserStore = defineStore('user', {
     }),
     actions: {
         async login(formData) {
-            console.log('je rentre dans le store user')
             await $axios.post('/login', {
               email: formData.email,
               password: formData.password,
             }).then((result) => {
-                console.log('je rentre dans le then, result:')
-                console.log(result.data.access_token)
                 localStorage.setItem('token',result.data.access_token)
                 this.$state.access_token = result.data.access_token
                 this.$state.isLoggedIn = true;

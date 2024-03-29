@@ -98,18 +98,14 @@
         v$.value.$validate();
         if (!v$.value.$error) {
           try {
-            console.log('je rentre dans le try');
             await userStore.login(formData);
             const token = window.localStorage.getItem('token');
             if (token) {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.access_token;
             }
-            console.log('je rentre dans la fin de try');
             router.push('/')
           } catch (error) {
-            console.log('je rentre dans le catch');
-            console.log(error);
-              errors.value  = 'Email ou mot de passe incorrect';
+            errors.value  = 'Email ou mot de passe incorrect';
           }
         }
       };

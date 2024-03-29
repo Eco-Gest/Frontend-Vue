@@ -71,7 +71,7 @@
         </nav>
 
     <!-- Mobile Top Bar -->
-    <nav v-if="$route.name !== 'Se connecter' && $route.name !== 's\'inscrire'" class="md:hidden fixed top-0 left-0 right-0 bg-surface2 p-7 text-onSurfaceVariant">
+    <nav v-if="$route.fullPath !== '/login' && $route.fullPath !== '/register'" class="md:hidden fixed top-0 left-0 right-0 bg-surface2 p-7 text-onSurfaceVariant">
       <div class="flex justify-between items-center">
         <!-- Back Arrow (Assuming you are using Vue Router for navigation) -->
         <NuxtLink to="/" class="flex items-center space-x-2">
@@ -79,7 +79,7 @@
           <h1 class="text-2xl">{{ $route.name }}</h1>
         </NuxtLink>
 
-        <template v-if="$route.name !== 'Accueil'">
+        <template v-if="$route.fullPath !== '/'">
           <NuxtLink to="/settings" class="hover:text-primary flex justify-center items-center">
             <span class="material-icons">settings</span>
           </NuxtLink>
@@ -93,7 +93,7 @@
     </nav>
 
     <!-- Mobile Navbar -->
-    <nav v-if="$route.name !== 'Se connecter' && $route.name !== 's\'inscrire'"  class="fixed bottom-0 left-0 right-0 bg-surface2  md:hidden">
+    <nav v-if="$route.fullPath !== '/login' && $route.fullPath !== '/register'"  class="fixed bottom-0 left-0 right-0 bg-surface2  md:hidden">
       <div class="flex justify-between text-onSurfaceVariant py-5 ">
         <NuxtLink to="/"  exact active-class="text-primary" class="w-1/5 hover:text-primary flex justify-center items-center">
           <span class="material-icons">home</span>
