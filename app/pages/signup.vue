@@ -141,8 +141,18 @@
             await userStore.register(formData);
             router.push('/login')
           } catch (error) {
-              console.log(error)
-              errors.value  = 'Un erreur s\'est passer veuillez réessayer';
+            console.log(error.response); // Log the entire error response for debugging purposes
+
+          if (error.response.status === 409) {
+            if (error.response.data.message === 'Email already used.') {
+              errors.value = 'Adresse e-mail déjà utilisé.Tentez de vous connecter ou veuillez choisir une autre addresse.';
+            } else  if (error.response.data.message === 'Username already used.') {
+              errors.value = 'Nom d\'utilisateur déjà existant. Veuillez en choisir un autre.';
+            }
+          } else {
+            errors.value = 'Une erreur s\'est produite. Veuillez réessayer.';
+          }
+
           }
         }
       };
