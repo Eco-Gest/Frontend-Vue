@@ -41,3 +41,4 @@ check the documentation to find the style you want https://tailwindcss.com/docs/
 
 ## Colors
 for Ecogest : in `app/tailwind.config.js` you can put specific variables like the font or the color. So far only used colors from our palette as been put, you can pick the color to use from material-theme.json.
+

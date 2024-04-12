@@ -20,6 +20,10 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
+      # Tests
+      - run:
+          name: test
+          command: npm run test
       # 3
       - run:
           name: Nuxt3 Build
