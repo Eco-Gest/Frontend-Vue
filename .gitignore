@@ -17,10 +17,8 @@ logs
 .DS_Store
 .fleet
 .idea
-node_modules
 
 # Local env files
 .env
 .env.*
 !.env.example
-node_modules/
