@@ -74,39 +74,43 @@
     </div>
   </template>
   
-  <script setup>
-      definePageMeta({
-        name: 'inscription',
-      })
-
-      import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
+  <script lang="ts" setup>
+      import { ref, reactive, computed } from 'vue';
+      import { useRouter } from 'vue-router';
       import { useUserStore } from '~~/store/user';
       import { useVuelidate } from '@vuelidate/core';
-      import { required, email, sameAs, minLength, helpers } from '@vuelidate/validators';
-      const userStore = useUserStore();
-      const router = useRouter();
-
-      const formData = reactive({
+      import { required, email, helpers } from '@vuelidate/validators';
+      
+      definePageMeta({
+        name: 'inscription',
+      });
+      
+      interface FormData {
+        email: string;
+        username: string;
+        password: string;
+        confirmPassword: string;
+      }
+      
+      const formData: FormData = reactive({
         email: '',
         username: '',
         password: '',
         confirmPassword: '',
       });
       
-      const errors = ref('');
-      const showPassword = ref(false);
-      const showConfirmPassword = ref(false);
-
-      const toggleShowPassword = () => {
+      const errors = ref<string>('');
+      const showPassword = ref<boolean>(false);
+      const showConfirmPassword = ref<boolean>(false);
+      
+      const toggleShowPassword = (): void => {
         showPassword.value = !showPassword.value;
       };
-
-      const toggleShowConfirmPassword = () => {
-        showPassword.value = !showPassword.value;
+      
+      const toggleShowConfirmPassword = (): void => {
+        showConfirmPassword.value = !showConfirmPassword.value;
       };
-
-
-
+      
       const rules = computed(() => {
         return {
           email: {
@@ -115,46 +119,49 @@
           },
           username: {
             required: helpers.withMessage('nom d\'utilisateur requis', required),
-            regex: helpers.withMessage('Le nom d\'utilisateur doit contenir entre 5 et 29 caractères alphanumériques ou underscores.', (value) => {
-            return /^[A-Za-z0-9_]{5,29}$/.test(value);}),
+            regex: helpers.withMessage('Le nom d\'utilisateur doit contenir entre 5 et 29 caractères alphanumériques ou underscores.', (value: string) => {
+              return /^[A-Za-z0-9_]{5,29}$/.test(value);
+            }),
           },
           password: {
             required: helpers.withMessage('mot de passe requis', required),
-            regex: helpers.withMessage('Le mot de passe doit contenir au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.', (value) => { return /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}/.test(value);}),
+            regex: helpers.withMessage('Le mot de passe doit contenir au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.', (value: string) => {
+              return /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}/.test(value);
+            }),
           },
           confirmPassword: {
             required: helpers.withMessage('Veuillez répéter le mot de passe', required),
-            sameAsPassword: helpers.withMessage('Les mots de passe ne correspondent pas', (value) => {
+            sameAsPassword: helpers.withMessage('Les mots de passe ne correspondent pas', (value: string) => {
               return value === formData.password;
             }),
           },
         };
       });
-
+      
       const v$ = useVuelidate(rules, formData);
-
-      const register = async () => {
+      const router = useRouter();
+      const userStore = useUserStore();
+      
+      const register = async (): Promise<void> => {
         v$.value.$validate();
         if (!v$.value.$error) {
           try {
-            console.log(formData);
             await userStore.register(formData);
-            router.push('/login')
-          } catch (error) {
+            router.push('/login');
+          } catch (error: any) {
             console.log(error.response); // Log the entire error response for debugging purposes
-
-          if (error.response.status === 409) {
-            if (error.response.data.message === 'Email already used.') {
-              errors.value = 'Adresse e-mail déjà utilisé.Tentez de vous connecter ou veuillez choisir une autre addresse.';
-            } else  if (error.response.data.message === 'Username already used.') {
-              errors.value = 'Nom d\'utilisateur déjà existant. Veuillez en choisir un autre.';
+            if (error.response) {
+              if (error.response.status === 409) {
+                if (error.response.data.message === 'Email already used.') {
+                  errors.value = 'Adresse e-mail déjà utilisé.Tentez de vous connecter ou veuillez choisir une autre addresse.';
+                } else if (error.response.data.message === 'Username already used.') {
+                  errors.value = 'Nom d\'utilisateur déjà existant. Veuillez en choisir un autre.';
+                }
+              } else {
+                errors.value = 'Une erreur s\'est produite. Veuillez réessayer.';
+              }
             }
-          } else {
-            errors.value = 'Une erreur s\'est produite. Veuillez réessayer.';
-          }
-
           }
         }
       };
-
   </script>

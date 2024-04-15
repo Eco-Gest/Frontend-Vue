@@ -54,32 +54,36 @@
   </template>
   
   <script lang="ts" setup>
-    definePageMeta({
-      name: 'Se connecter',
-    })
-
-      import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
-      import axios from 'axios';
+      import { ref, reactive, computed } from 'vue';
+      import { useRouter } from 'vue-router';
       import { useUserStore } from '~~/store/user';
       import { useVuelidate } from '@vuelidate/core';
-      import { required, email, sameAs, minLength, helpers } from '@vuelidate/validators';
-
-      const userStore = useUserStore();
-      const router = useRouter();
-
-      const formData = reactive({
+      import { required, email, helpers } from '@vuelidate/validators';
+      import axios from 'axios'; // import axios
+      
+      definePageMeta({
+        name: 'Se connecter',
+      });
+      
+      interface FormData {
+        email: string;
+        username: string;
+        password: string;
+      }
+      
+      const formData: FormData = reactive({
         email: '',
         username: '',
         password: '',
       });
-
-      const errors = ref('');
-      const showPassword = ref(false);
-
-      const toggleShowPassword = () => {
+      
+      const errors = ref<string>('');
+      const showPassword = ref<boolean>(false);
+      
+      const toggleShowPassword = (): void => {
         showPassword.value = !showPassword.value;
       };
-
+      
       const rules = computed(() => {
         return {
           email: {
@@ -91,21 +95,23 @@
           },
         };
       });
-
-      const v$ = useVuelidate(rules, formData);
       
-      const login = async () => {
+      const v$ = useVuelidate(rules, formData);
+      const router = useRouter();
+      const userStore = useUserStore();
+      
+      const login = async (): Promise<void> => {
         v$.value.$validate();
         if (!v$.value.$error) {
           try {
             await userStore.login(formData);
             const token = window.localStorage.getItem('token');
             if (token) {
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.access_token;
+              axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.access_token;
             }
-            router.push('/')
-          } catch (error) {
-            errors.value  = 'Email ou mot de passe incorrect';
+            router.push('/');
+          } catch (error: any) { 
+            errors.value = error.message || 'Email ou mot de passe incorrect'; // display actual error message
           }
         }
       };

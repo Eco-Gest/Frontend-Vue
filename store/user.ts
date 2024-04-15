@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
 import axios from "~/plugins/axios";
+import { State, User } from '@/types';
 
 const $axios = axios().provide.axios;
 
 export const useUserStore = defineStore('user', {
-    state: () => ({
+    state: (): State => ({
         id: '',
         username: '',
         email: '',
@@ -12,7 +13,7 @@ export const useUserStore = defineStore('user', {
         isLoggedIn: false,
     }),
     actions: {
-        async login(formData) {
+        async login(formData: User) {
             await $axios.post('/login', {
               email: formData.email,
               password: formData.password,
@@ -23,7 +24,7 @@ export const useUserStore = defineStore('user', {
             });
         },
         
-        async register(formData) {
+        async register(formData: User) {
             await $axios.post('/register', {
               username: formData.username,
               email: formData.email,
