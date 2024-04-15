@@ -27,7 +27,6 @@
     "@vue/test-utils": "^2.4.5",
     "autoprefixer": "^10.4.17",
     "axios": "^1.6.8",
-    "happy-dom": "^13.10.1",
     "jsdom": "^24.0.0",
     "netlify-cli": "^17.22.1",
     "pinia": "^2.1.7",

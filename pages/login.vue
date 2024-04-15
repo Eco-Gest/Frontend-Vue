@@ -111,7 +111,7 @@
             }
             router.push('/');
           } catch (error: any) { 
-            errors.value = error.message || 'Email ou mot de passe incorrect'; // display actual error message
+            errors.value = 'Email ou mot de passe incorrect'; // display actual error message
           }
         }
       };

@@ -14,28 +14,35 @@ export const useUserStore = defineStore('user', {
     }),
     actions: {
         async login(formData: User) {
-            await $axios.post('/login', {
-              email: formData.email,
-              password: formData.password,
-            }).then((result) => {
-                localStorage.setItem('token',result.data.access_token)
-                this.$state.access_token = result.data.access_token
-                this.$state.isLoggedIn = true;
-            });
+            try {
+              const result = await $axios.post('/login', {
+                email: formData.email,
+                password: formData.password,
+              });
+              localStorage.setItem('token', result.data.access_token);
+              this.$state.access_token = result.data.access_token;
+              this.$state.isLoggedIn = true;
+            } catch (error) {
+              this.$state.isLoggedIn = false;
+              throw error;
+            }
         },
         
         async register(formData: User) {
-            await $axios.post('/register', {
-              username: formData.username,
-              email: formData.email,
-              password: formData.password,
-            })
+            try {
+              await $axios.post('/register', {
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+              });
+            } catch (error) {
+                throw error;
+            }
         },
 
         async getCurrentUser() {
             // let res = await $axios.get('/user')
             // this.$state.id = res.data.data.id
-            // this.$state.full_name = res.data.data.full_name
             // this.$state.email = res.data.data.email      
             // this.$state.isLoggedIn = true
         },
