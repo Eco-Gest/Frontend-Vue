@@ -1,6 +1,7 @@
 <template>
     <div class="bg-background flex flex-col items-center justify-center h-screen">
-        <div class="sm:w-80 w-72 flex flex-col">
+      <LoadSpinner v-if="isLoading" />
+      <div class="sm:w-80 w-72 flex flex-col">
         <!-- Logo -->
         <img src="..\assets\images\logo-color.png" alt="Logo" class="mb-12 w-56 self-center md:hidden" />
     
@@ -80,6 +81,7 @@
       import { useUserStore } from '~~/store/user';
       import { useVuelidate } from '@vuelidate/core';
       import { required, email, helpers } from '@vuelidate/validators';
+      import LoadSpinner from '~/components/LoadSpinner.vue';
       
       definePageMeta({
         name: 'inscription',
@@ -141,27 +143,32 @@
       const v$ = useVuelidate(rules, formData);
       const router = useRouter();
       const userStore = useUserStore();
+
+      const isLoading = ref<boolean>(false);
       
       const register = async (): Promise<void> => {
-        v$.value.$validate();
-        if (!v$.value.$error) {
-          try {
-            await userStore.register(formData);
-            router.push('/login');
-          } catch (error: any) {
-            console.log(error.response); // Log the entire error response for debugging purposes
-            if (error.response) {
-              if (error.response.status === 409) {
-                if (error.response.data.message === 'Email already used.') {
-                  errors.value = 'Adresse e-mail déjà utilisé.Tentez de vous connecter ou veuillez choisir une autre addresse.';
-                } else if (error.response.data.message === 'Username already used.') {
-                  errors.value = 'Nom d\'utilisateur déjà existant. Veuillez en choisir un autre.';
+          isLoading.value = true;
+          v$.value.$validate();
+          if (!v$.value.$error) {
+            try {
+              await userStore.register(formData);
+              router.push('/login');
+            } catch (error: any) {
+              console.log(error.response); // Log the entire error response for debugging purposes
+              if (error.response) {
+                if (error.response.status === 409) {
+                  if (error.response.data.message === 'Email already used.') {
+                    errors.value = 'Adresse e-mail déjà utilisé.Tentez de vous connecter ou veuillez choisir une autre addresse.';
+                  } else if (error.response.data.message === 'Username already used.') {
+                    errors.value = 'Nom d\'utilisateur déjà existant. Veuillez en choisir un autre.';
+                  }
+                } else {
+                  errors.value = 'Une erreur s\'est produite. Veuillez réessayer.';
                 }
-              } else {
-                errors.value = 'Une erreur s\'est produite. Veuillez réessayer.';
               }
+            } finally {
+              isLoading.value = false;
             }
           }
-        }
-      };
+        };
   </script>
