@@ -22,7 +22,7 @@ jobs:
             - ./node_modules
       # Tests
       - run:
-          name: test
+          name: Test
           command: npm run test
       # 3
       - run:

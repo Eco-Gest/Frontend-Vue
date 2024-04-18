@@ -60,9 +60,9 @@
             <span class="material-icons">{{ showConfirmPassword ? 'visibility_off' : 'visibility' }}</span>
           </div>
         </div>
-        <div v-if="errors" class="text-error py-3 px-4 bg-errorContainer">{{ errors }}</div>
+        <div v-if="errors" class="text-error my-3 py-3 px-4 bg-errorContainer">{{ errors }}</div>
         <!-- Connect Button -->
-        <button @click="register" class="bg-primary text-white py-3 px-4 rounded-full w-full">
+        <button @click="register" class="bg-primary text-white mt-2 py-3 px-4 rounded-full w-full">
           S'inscrire
         </button>
     
@@ -116,17 +116,17 @@
       const rules = computed(() => {
         return {
           email: {
-            required: helpers.withMessage('email requis', required),
-            email: helpers.withMessage('format d\'email invalide', email),
+            required: helpers.withMessage('Email requis', required),
+            email: helpers.withMessage('Format d\'email invalide', email),
           },
           username: {
-            required: helpers.withMessage('nom d\'utilisateur requis', required),
+            required: helpers.withMessage('Nom d\'utilisateur requis', required),
             regex: helpers.withMessage('Le nom d\'utilisateur doit contenir entre 5 et 29 caractères alphanumériques ou underscores.', (value: string) => {
               return /^[A-Za-z0-9_]{5,29}$/.test(value);
             }),
           },
           password: {
-            required: helpers.withMessage('mot de passe requis', required),
+            required: helpers.withMessage('Mot de passe requis', required),
             regex: helpers.withMessage('Le mot de passe doit contenir au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial.', (value: string) => {
               return /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}/.test(value);
             }),

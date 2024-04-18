@@ -4,6 +4,7 @@ import { State, User } from '@/types';
 
 const $axios = axios().provide.axios;
 
+// TODO : diviser auth store et user store
 export const useUserStore = defineStore('user', {
     state: (): State => ({
         id: '',

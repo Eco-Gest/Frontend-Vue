@@ -33,7 +33,7 @@
             <span class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
           </div>
         </div>
-        <div v-if="errors" class="text-error py-3 px-4 bg-errorContainer">{{ errors }}</div>
+        <div v-if="errors" class="text-error my-3 py-3 px-4 bg-errorContainer">{{ errors }}</div>
         <!-- Forgot Password Link -->
         <div class="mb-2 text-center">
           <NuxtLink to="/forgot-password" class="text-sm text-primary">Mot de passe oublié ?</NuxtLink>
