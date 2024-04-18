@@ -27,6 +27,9 @@
                 'border-[#42d392]': !v$.username.$invalid,
               }"
               @change="v$.username.$touch" placeholder="Entrez votre nom d'utilisateur" required />
+          <span class="text-xs text-error" v-if="v$.email.$error">{{
+            v$.email.$errors[0].$message
+          }}</span>
         </div>
 
         <!-- Password Input -->
@@ -56,7 +59,7 @@
           <span class="text-xs text-error" v-if="v$.confirmPassword.$error">{{
             v$.confirmPassword.$errors[0].$message
           }}</span>
-          <div class="absolute top-9 right-0 flex items-center pr-2 cursor-pointer" @click="toggleShowPassword">
+          <div class="absolute top-9 right-0 flex items-center pr-2 cursor-pointer" @click="toggleShowConfirmPassword">
             <span class="material-icons">{{ showConfirmPassword ? 'visibility_off' : 'visibility' }}</span>
           </div>
         </div>
@@ -147,9 +150,9 @@
       const isLoading = ref<boolean>(false);
       
       const register = async (): Promise<void> => {
-          isLoading.value = true;
           v$.value.$validate();
           if (!v$.value.$error) {
+            isLoading.value = true;
             try {
               await authStore.register(formData);
               router.push('/login');

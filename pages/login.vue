@@ -1,6 +1,7 @@
 <template>
     <div class="bg-background flex flex-col items-center justify-center h-screen">
-        <div class="sm:w-80 w-72 flex flex-col">
+      <LoadSpinner v-if="isLoading" />  
+      <div class="sm:w-80 w-72 flex flex-col">
         <!-- Logo -->
         <img src="..\assets\images\logo-color.png" alt="Logo" class="mb-12 w-56 self-center md:hidden" />
     
@@ -59,7 +60,8 @@
       import { useAuthStore } from '~~/store/auth';
       import { useVuelidate } from '@vuelidate/core';
       import { required, email, helpers } from '@vuelidate/validators';
-      import axios from 'axios'; // import axios
+      import axios from 'axios';
+      import LoadSpinner from '~/components/LoadSpinner.vue';
       
       definePageMeta({
         name: 'Se connecter',
@@ -87,11 +89,11 @@
       const rules = computed(() => {
         return {
           email: {
-            required: helpers.withMessage('email requis', required),
-            email: helpers.withMessage('format d\'email invalide', email),
+            required: helpers.withMessage('Email requis', required),
+            email: helpers.withMessage('Format d\'email invalide', email),
           },
           password: {
-            required: helpers.withMessage('mot de passe requis', required),
+            required: helpers.withMessage('Mot de passe requis', required),
           },
         };
       });
@@ -99,10 +101,13 @@
       const v$ = useVuelidate(rules, formData);
       const router = useRouter();
       const authStore = useAuthStore();
+
+      const isLoading = ref<boolean>(false);
       
       const login = async (): Promise<void> => {
         v$.value.$validate();
         if (!v$.value.$error) {
+          isLoading.value = true;
           try {
             await authStore.login(formData);
             const token = window.localStorage.getItem('token');
@@ -112,6 +117,8 @@
             router.push('/');
           } catch (error: any) { 
             errors.value = 'Email ou mot de passe incorrect'; // display actual error message
+          } finally {
+              isLoading.value = false;
           }
         }
       };
