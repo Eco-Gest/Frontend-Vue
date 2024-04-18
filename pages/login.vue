@@ -48,7 +48,7 @@
         <!-- Sign Up Link -->
         <div class="mt-16 text-center">
           <p>Vous souhaitez créer un compte ?</p>
-          <NuxtLink to="/signup" class="text-primary">S’inscrire</NuxtLink>
+          <NuxtLink to="/register" class="text-primary">S’inscrire</NuxtLink>
         </div>
       </div>
     </div>

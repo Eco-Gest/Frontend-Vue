@@ -13,7 +13,7 @@
           <img src="..\assets\images\logo-color.png" alt="Logo" class="h-10">
         </div>
         <!-- Content for the login page -->
-        <NuxtLink to="/signup" class="text-white bg-primary hover:bg-primaryHover hover:shadow-md font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2"> s'inscrire </NuxtLink>
+        <NuxtLink to="/register" class="text-white bg-primary hover:bg-primaryHover hover:shadow-md font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2"> s'inscrire </NuxtLink>
       </nav>
 
       <nav v-else-if="$route.name == 'inscription'" class="hidden md:flex fixed top-0 left-0 right-0 justify-between text-onSurfaceVariant items-center bg-surface2 p-4">
