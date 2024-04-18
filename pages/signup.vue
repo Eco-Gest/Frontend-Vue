@@ -78,7 +78,7 @@
   <script lang="ts" setup>
       import { ref, reactive, computed } from 'vue';
       import { useRouter } from 'vue-router';
-      import { useUserStore } from '~~/store/user';
+      import { useAuthStore } from '~~/store/auth';
       import { useVuelidate } from '@vuelidate/core';
       import { required, email, helpers } from '@vuelidate/validators';
       import LoadSpinner from '~/components/LoadSpinner.vue';
@@ -142,7 +142,7 @@
       
       const v$ = useVuelidate(rules, formData);
       const router = useRouter();
-      const userStore = useUserStore();
+      const authStore = useAuthStore();
 
       const isLoading = ref<boolean>(false);
       
@@ -151,7 +151,7 @@
           v$.value.$validate();
           if (!v$.value.$error) {
             try {
-              await userStore.register(formData);
+              await authStore.register(formData);
               router.push('/login');
             } catch (error: any) {
               console.log(error.response); // Log the entire error response for debugging purposes

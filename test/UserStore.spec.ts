@@ -9,19 +9,19 @@ import {
   afterEach,
   afterAll,
 } from "vitest";
-import { useUserStore } from "../store/user";
+import { useAuthStore } from "../store/auth";
 import axios from "~/plugins/axios";
 const $axios = axios().provide.axios;
 
 
-describe("useUserStore", () => {
-  let store: ReturnType<typeof useUserStore>;
+describe("useAuthStore", () => {
+  let store: ReturnType<typeof useAuthStore>;
   let postMock: vi.MockInstance;
 
   // initialise store
   beforeEach(() => {
     setActivePinia(createPinia());
-    store = useUserStore();
+    store = useAuthStore();
     postMock = vi.fn().mockResolvedValue({ data: { access_token: 'test_token' } });
     $axios.post = postMock;
   });

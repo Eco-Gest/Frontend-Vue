@@ -7,7 +7,7 @@ export interface State {
     isLoggedIn: boolean;
   }
   
-  export interface User {
+  export interface Auth {
     email: string;
     password: string;
     username?: string;

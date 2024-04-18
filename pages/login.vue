@@ -56,7 +56,7 @@
   <script lang="ts" setup>
       import { ref, reactive, computed } from 'vue';
       import { useRouter } from 'vue-router';
-      import { useUserStore } from '~~/store/user';
+      import { useAuthStore } from '~~/store/auth';
       import { useVuelidate } from '@vuelidate/core';
       import { required, email, helpers } from '@vuelidate/validators';
       import axios from 'axios'; // import axios
@@ -98,16 +98,16 @@
       
       const v$ = useVuelidate(rules, formData);
       const router = useRouter();
-      const userStore = useUserStore();
+      const authStore = useAuthStore();
       
       const login = async (): Promise<void> => {
         v$.value.$validate();
         if (!v$.value.$error) {
           try {
-            await userStore.login(formData);
+            await authStore.login(formData);
             const token = window.localStorage.getItem('token');
             if (token) {
-              axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.access_token;
+              axios.defaults.headers.common['Authorization'] = 'Bearer ' + authStore.access_token;
             }
             router.push('/');
           } catch (error: any) { 
