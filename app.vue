@@ -2,7 +2,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <div>
     <TheNavBar />
-    <NuxtPage />
+    <div class="bg-background ">
+      <NuxtPage />
+    </div>
     <TheFooter />
   </div>
 </template>
