@@ -6,7 +6,7 @@
 
       <!-- Conditionally render menu based on the route -->
       <!-- <div v-if="!$pinia.store.auth.isAuthenticated"> -->
-      <nav v-if="$route.name == 'Se connecter'" class="hidden md:flex fixed top-0 left-0 right-0 justify-between text-onSurfaceVariant items-center bg-surface2 p-4">
+      <nav v-if="$route.name == 'Se connecter' || $route.name == 'forgotten-password'" class="hidden md:flex fixed top-0 left-0 right-0 justify-between text-onSurfaceVariant items-center bg-surface2 p-4">
         <!-- Logo on the left -->
         <div class="flex-shrink-0">
           <!-- Replace 'your-logo.png' with the path to your logo image -->

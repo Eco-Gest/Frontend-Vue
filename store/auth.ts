@@ -44,6 +44,16 @@ export const useAuthStore = defineStore('auth', {
             this.resetState()
         },
 
+        async resetPasswordRequest(email: string) {
+          try {
+            await $axios.post('/mail-reset-password', {
+              email,
+            });
+          } catch (error) {
+            throw error;
+          }
+        },
+
         resetState() {      
             this.$state.access_token = ''
             this.$state.isLoggedIn = false

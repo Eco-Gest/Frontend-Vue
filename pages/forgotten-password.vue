@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center justify-center h-screen">
       <LoadSpinner v-if="isLoading" /> 
-      <div class="sm:w-80 w-72 flex flex-col">
+      <div class="sm:w-80 w-72 flex flex-col" v-if="!emailSent">
       <h1 class="text-lg mb-6">Entrez votre e-mail afin de recevoir un lien de réinitialisation de votre mot de passe :</h1>
       
         <!-- Email Input -->
@@ -13,10 +13,16 @@
           }}</span>
         </div>
 
+      <div v-if="errors" class="text-error my-3 py-3 px-4 bg-errorContainer">{{ errors }}</div>
       <button @click="sendResetLink" class="bg-primary text-white py-3 px-4 rounded-full w-full">
         Envoyer le lien par email
       </button>
     </div> 
+    <div class="sm:w-80 w-72 flex flex-col" v-else>
+      <span class="material-icons mb-2 text-4xl text-primary">check_circle</span>
+      <h1 class="text-xl font-bold mb-2">Email envoyé</h1>
+      <p>Regardez vos mails et ouvrez le lien pour continuer la réinitialisation de votre mot de passe.</p>
+    </div>
   </div>
 </template>
 
@@ -35,14 +41,11 @@
         middleware: 'auth'
       })
 
-      interface FormData {
-            email: string;
-          }
-      
-      const formData: FormData = reactive({
-            email: '',
-          });
-      
+      const formData = reactive<{ email: string }>({
+        email: '',
+      });
+
+      const emailSent = ref<boolean>(false);
       const errors = ref<string>('');
 
       const rules = computed(() => {
@@ -59,13 +62,15 @@
       const authStore = useAuthStore();
 
       const isLoading = ref<boolean>(false);    
-      const sendResetLink = () => {
+      const sendResetLink = async (): Promise<void> => {
         v$.value.$validate();
         if (!v$.value.$error) {
           isLoading.value = true;
           try {
+            await authStore.resetPasswordRequest(formData.email);
+            emailSent.value = true; 
           } catch (error: any) { 
-            errors.value = 'Email ou mot de passe incorrect'; // display actual error message
+            errors.value = 'Une erreur s\'est produite. Veuillez réessayer.'; 
           } finally {
               isLoading.value = false;
           }
