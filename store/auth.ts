@@ -46,10 +46,24 @@ export const useAuthStore = defineStore('auth', {
 
         async resetPasswordRequest(email: string) {
           try {
-            await $axios.post('/mail-reset-password', {
+            await $axios.post('/request-reset-password', {
               email,
             });
           } catch (error) {
+            throw error;
+          }
+        },
+
+        async resetPassword(formData) {
+          try {
+            await $axios.post('/reset-password', {
+              token: formData.token,
+              email: formData.email,
+              password: formData.password,
+              password_confirmation: formData.password_confirmation,
+            });
+          } catch (error) {
+            console.log(error);
             throw error;
           }
         },
