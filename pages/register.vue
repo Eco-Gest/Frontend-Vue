@@ -69,7 +69,7 @@
           S'inscrire
         </button>
     
-        <!-- Sign Up Link -->
+        <!-- Login Link -->
         <div class="mt-16 text-center">
           <p>Vous avez déjà un compte ?</p>
           <NuxtLink to="/login" class="text-primary">Se connecter</NuxtLink>

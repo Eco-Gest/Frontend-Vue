@@ -2,7 +2,8 @@
   <div class="flex flex-col items-center justify-center h-screen">
       <LoadSpinner v-if="isLoading" /> 
       <div class="sm:w-80 w-72 flex flex-col" v-if="!emailSent">
-      <h1 class="text-lg mb-6">Entrez votre e-mail afin de recevoir un lien de réinitialisation de votre mot de passe :</h1>
+      <h1 class="text-2xl font-bold mb-2">Mot de passe oublié</h1>
+      <p class="mb-6">Veuillez entrer l'adresse email associée à votre compte pour modifier votre mot de passe.</p>
       
         <!-- Email Input -->
         <div class="mb-4 w-full">
@@ -21,7 +22,12 @@
     <div class="sm:w-80 w-72 flex flex-col" v-else>
       <span class="material-icons mb-2 text-4xl text-primary">check_circle</span>
       <h1 class="text-xl font-bold mb-2">Email envoyé</h1>
-      <p>Regardez vos mails et ouvrez le lien pour continuer la réinitialisation de votre mot de passe.</p>
+      <p>Un email de réinitialisation de mot de passe a été envoyé à l'adresse que vous avez fournie. Veuillez vérifier votre boîte de réception et suivre les instructions fournies dans l'email pour réinitialiser votre mot de passe.</p>
+      <!-- Sign Up Link -->
+      <div class="mt-16 text-center">
+            <p>Vous avez réinitialisé votre mot de passe ?</p>
+            <NuxtLink to="/login" class="text-primary">Se connecter</NuxtLink>
+      </div>
     </div>
   </div>
 </template>
