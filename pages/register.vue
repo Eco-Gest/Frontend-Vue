@@ -157,7 +157,6 @@
               await authStore.register(formData);
               router.push('/login');
             } catch (error: any) {
-              console.log(error.response); // Log the entire error response for debugging purposes
               if (error.response) {
                 if (error.response.status === 409) {
                   if (error.response.data.message === 'Email already used.') {
