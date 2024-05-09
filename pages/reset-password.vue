@@ -19,7 +19,7 @@
 
       <!-- Password Input -->
       <div class="relative mb-2 w-full">
-        <label for="password" class="block mb-2 text-sm">Mot de passe</label>
+        <label for="password" class="block mb-2 text-sm">Votre nouveau mot de passe</label>
         <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" id="password"
           class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 " :class="{
       ' border-error focus:border-error': v$.password.$error,
@@ -35,7 +35,7 @@
 
       <!-- Repeat Password Input -->
       <div class="relative mb-2 w-full">
-        <label for="confirmPassword" class="block mb-2 text-sm">Répétez le mot de passe</label>
+        <label for="confirmPassword" class="block mb-2 text-sm">Répétez votre nouveau mot de passe</label>
         <input v-model="formData.confirm_password" :type="showConfirmPassword ? 'text' : 'password'"
           id="confirmPassword" class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 " :class="{
       ' border-error focus:border-error': v$.confirm_password.$error,
@@ -74,7 +74,6 @@ import { useRoute } from 'vue-router';
 import { useAuthStore } from '~~/store/auth';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, helpers } from '@vuelidate/validators';
-import axios, { CancelToken } from 'axios';
 import LoadSpinner from '~/components/LoadSpinner.vue';
 
 definePageMeta({
