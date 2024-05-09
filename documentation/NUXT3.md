@@ -143,4 +143,11 @@ export default {
     };
   }
 }
+```
 
+## Typescript
+This project use typescript learn about it here https://www.freecodecamp.org/news/learn-typescript-beginners-guide/ or use the official documentation there https://www.typescriptlang.org/fr/docs/
+
+## CI/CD
+
+Find more about our CI/CD and testing organisation on the Ecogest google drive
