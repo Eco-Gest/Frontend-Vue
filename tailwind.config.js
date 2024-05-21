@@ -18,8 +18,11 @@ module.exports = {
       'surface2': '#EBEFDA',
       'onSurfaceVariant': '#414941',
       'secondaryContainer': '#D3E8D2',
+      'onSecondaryFixedVariant': '#394B3B',
       'error': '#BA1A1A',
       'errorContainer': '#FFDAD6',
+      'outlineVariant': '#757D74',
+      'outline': '#717970',
     },
     fontFamily: {
       sans: ['Open Sans', 'sans-serif'],
