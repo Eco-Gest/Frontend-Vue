@@ -1,12 +1,11 @@
 // user.ts
 import { defineStore } from "pinia";
 import axios from "~/plugins/axios";
-import { State } from '@/types';
 
 const $axios = axios().provide.axios;
 
 export const useUserStore = defineStore('user', {
-    state: (): State => ({
+    state: () => ({
         id: '',
         username: '',
         email: '',

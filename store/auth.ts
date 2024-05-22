@@ -1,7 +1,7 @@
 // auth.ts
 import { defineStore } from "pinia";
 import axios from "~/plugins/axios";
-import { Auth } from '@/types';
+import type { Auth } from '@/types/auth';
 import { useUserStore } from './user'; // import the user store
 
 const $axios = axios().provide.axios;
