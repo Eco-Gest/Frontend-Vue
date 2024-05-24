@@ -28,6 +28,7 @@
         <span class="text-xs text-error" v-if="v$.password.$error">{{
       v$.password.$errors[0].$message
     }}</span>
+    <p  class="block text-xs mt-1 text-outlineVariant ">Votre mot de passe doit contenir : au moins 8 caractères, 1 chiffre, 1 lettre majuscule, 1 lettre minuscule et 1 caractère spécial.</p>
         <div class="absolute top-9 right-0 flex items-center pr-2 cursor-pointer" @click="toggleShowPassword">
           <span class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
         </div>
