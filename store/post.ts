@@ -4,6 +4,8 @@ import { defineStore } from "pinia";
 import axios from "~/plugins/axios";
 import type { State } from '@/types/post';
 
+const $axios = axios().provide.axios;
+
 export const usePostStore = defineStore('post', {
     state: () : State => ({
         posts: [],
@@ -15,7 +17,7 @@ export const usePostStore = defineStore('post', {
          */
         async fetchPosts() {
             try {
-                const response = await axios.get('/posts');
+                const response = await $axios.get('/posts');
                 this.posts = response.data;
             } catch (error) {
                 console.error(error);
@@ -26,16 +28,20 @@ export const usePostStore = defineStore('post', {
          * @param id - The ID of the post to fetch.
          */
         async fetchPost(id) {
+            console.log(id);
+            console.log('fetching post');
             try {
-                const response = await axios.get(`/posts/${id}`);
-                this.currentPost = response.data;
+                const response = await $axios.get(`/posts/${id}`);
+                console.log(response.data);
+                this.$state.currentPost = response.data;
+                console.log(this.$state.currentPost.user);
             } catch (error) {
                 console.error(error);
             }
         },
         // async createPost(post) {
         //     try {
-        //         const response = await axios.post('/posts', post);
+        //         const response = await $axios.post('/posts', post);
         //         this.posts.push(response.data);
         //     } catch (error) {
         //         console.error(error);
@@ -43,7 +49,7 @@ export const usePostStore = defineStore('post', {
         // },
         // async updatePost(post) {
         //     try {
-        //         const response = await axios.put(`/posts/${post.id}`, post);
+        //         const response = await $axios.put(`/posts/${post.id}`, post);
         //         const index = this.posts.findIndex(p => p.id === post.id);
         //         if (index !== -1) {
         //             this.posts[index] = response.data;
@@ -54,7 +60,7 @@ export const usePostStore = defineStore('post', {
         // },
         // async deletePost(id) {
         //     try {
-        //         await axios.delete(`/posts/${id}`);
+        //         await $axios.delete(`/posts/${id}`);
         //         this.posts = this.posts.filter(p => p.id !== id);
         //     } catch (error) {
         //         console.error(error);
@@ -62,9 +68,12 @@ export const usePostStore = defineStore('post', {
         // }
     },
     getters: {
-        // getPostById: (state) => (id) => {
-        //     return state.posts.find(post => post.id === id);
-        // }
+        getPostById: (state) => (id) => {
+            console.log(id);
+            console.log(state.posts);
+            console.log("getting post by id")
+             return state.posts.find(post => post.id === id);
+        }
     },
     persist: true,
 })
