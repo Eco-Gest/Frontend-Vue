@@ -2,14 +2,11 @@
   <div class="flex flex-col">
 
     <!-- Desktop Navbar -->
-
-
       <!-- Conditionally render menu based on the route -->
       <!-- <div v-if="!$pinia.store.auth.isAuthenticated"> -->
-      <nav v-if="$route.name == 'Se connecter'" class="hidden md:flex fixed top-0 left-0 right-0 justify-between text-onSurfaceVariant items-center bg-surface2 p-4">
+      <nav v-if="$route.name == 'Se connecter' || $route.name == 'Mot de passe oublié' || $route.name == 'Réinitialiser votre mot de passe'" class="hidden md:flex fixed top-0 left-0 right-0 justify-between text-onSurfaceVariant items-center bg-surface2 p-4">
         <!-- Logo on the left -->
         <div class="flex-shrink-0">
-          <!-- Replace 'your-logo.png' with the path to your logo image -->
           <img src="..\assets\images\logo-color.png" alt="Logo" class="h-10">
         </div>
         <!-- Content for the login page -->
@@ -19,7 +16,6 @@
       <nav v-else-if="$route.name == 'inscription'" class="hidden md:flex fixed top-0 left-0 right-0 justify-between text-onSurfaceVariant items-center bg-surface2 p-4">
         <!-- Logo on the left -->
         <div class="flex-shrink-0">
-          <!-- Replace 'your-logo.png' with the path to your logo image -->
           <img src="..\assets\images\logo-color.png" alt="Logo" class="h-10">
         </div>
         <!-- Content for the login page -->
@@ -29,7 +25,6 @@
       <nav v-else class="hidden md:flex fixed top-0 left-0 right-0 justify-between text-onSurfaceVariant items-center bg-surface2 p-4">
         <!-- Logo on the left -->
         <div class="flex-shrink-0">
-          <!-- Replace 'your-logo.png' with the path to your logo image -->
           <img src="..\assets\images\logo-color.png" alt="Logo" class="h-10">
         </div>  
         <div class="flex-grow flex items-center justify-center">
@@ -79,9 +74,14 @@
           <h1 class="text-2xl">{{ $route.name }}</h1>
         </NuxtLink>
 
-        <template v-if="$route.fullPath !== '/'">
+        <template v-if="$route.fullPath !== '/' && $route.fullPath !== '/forgotten-password' && $route.name !== 'Réinitialiser votre mot de passe'">
           <NuxtLink to="/settings" class="hover:text-primary flex justify-center items-center">
             <span class="material-icons">settings</span>
+          </NuxtLink>
+        </template>
+        <template v-if="$route.fullPath == '/forgotten-password' || $route.name == 'Réinitialiser votre mot de passe'">
+          <NuxtLink to="/register" class="hover:text-primary flex justify-center items-center">
+            <span class="material-icons">person</span>
           </NuxtLink>
         </template>
         <template v-else>
@@ -93,7 +93,7 @@
     </nav>
 
     <!-- Mobile Navbar -->
-    <nav v-if="$route.fullPath !== '/login' && $route.fullPath !== '/register'"  class="fixed bottom-0 left-0 right-0 bg-surface2  md:hidden">
+    <nav v-if="$route.fullPath !== '/login' && $route.fullPath !== '/register' && $route.fullPath !== '/forgotten-password' && $route.name !== 'Réinitialiser votre mot de passe'"  class="fixed bottom-0 left-0 right-0 bg-surface2  md:hidden">
       <div class="flex justify-between text-onSurfaceVariant py-5 ">
         <NuxtLink to="/"  exact active-class="text-primary" class="w-1/5 hover:text-primary flex justify-center items-center">
           <span class="material-icons">home</span>
@@ -130,6 +130,6 @@
     localStorage.removeItem('token');
     router.push('/login');
     };
-</script>
 
-~/store/user
+
+</script>

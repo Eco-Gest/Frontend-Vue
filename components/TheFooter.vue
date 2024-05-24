@@ -1,6 +1,6 @@
 <!-- components/Footer.vue -->
 <template>
-    <footer class="hidden md:flex border-t p-4 text-primary justify-center">
+    <footer class="hidden fixed bottom-0 md:flex border-t p-4 text-primary justify-center items-center w-full">
         <div class="mr-4">Eco’Gest - {{ currentYear }}</div>
         <NuxtLink to="/legal" class="mr-4">Mentions légales</NuxtLink>
         <!-- TODO: ajouter liens vers le github de chacun ?-->

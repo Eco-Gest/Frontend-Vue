@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
 
     // If user is not authenticated and trying to access any other page, redirect to login
-    if (!authStore.isLoggedIn && to.fullPath !== '/login') {
+    if (!authStore.isLoggedIn && (to.fullPath !== '/login' && to.fullPath !== '/forgotten-password')) {
         return navigateTo('/login')
     }
 })

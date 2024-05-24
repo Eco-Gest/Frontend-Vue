@@ -35,6 +35,7 @@
         <!-- Password Input -->
         <div class="relative mb-2 w-full">
           <label for="password" class="block mb-2 text-sm">Mot de passe</label>
+        
           <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" id="password" class="bg-gray-50 border border-black text-sm rounded-lg  block w-full p-2.5 "               :class="{
                 ' border-error focus:border-error': v$.password.$error,
                 'border-[#42d392]': !v$.password.$invalid,
@@ -43,6 +44,7 @@
           <span class="text-xs text-error" v-if="v$.password.$error">{{
             v$.password.$errors[0].$message
           }}</span>
+          <p  class="block text-xs mt-1 text-outlineVariant ">Votre mot de passe doit contenir : au moins 8 caractères, 1 chiffre, 1 lettre majuscule, 1 lettre minuscule et 1 caractère spécial.</p>
           <div class="absolute top-9 right-0 flex items-center pr-2 cursor-pointer" @click="toggleShowPassword">
             <span class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
           </div>
@@ -69,7 +71,7 @@
           S'inscrire
         </button>
     
-        <!-- Sign Up Link -->
+        <!-- Login Link -->
         <div class="mt-16 text-center">
           <p>Vous avez déjà un compte ?</p>
           <NuxtLink to="/login" class="text-primary">Se connecter</NuxtLink>
@@ -157,7 +159,6 @@
               await authStore.register(formData);
               router.push('/login');
             } catch (error: any) {
-              console.log(error.response); // Log the entire error response for debugging purposes
               if (error.response) {
                 if (error.response.status === 409) {
                   if (error.response.data.message === 'Email already used.') {

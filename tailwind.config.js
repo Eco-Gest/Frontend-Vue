@@ -20,6 +20,7 @@ module.exports = {
       'secondaryContainer': '#D3E8D2',
       'error': '#BA1A1A',
       'errorContainer': '#FFDAD6',
+      'outlineVariant': '#757D74',
     },
     fontFamily: {
       sans: ['Open Sans', 'sans-serif'],

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-background flex flex-col items-center justify-center h-screen">
+    <div class="flex flex-col items-center justify-center h-screen">
       <LoadSpinner v-if="isLoading" />  
       <div class="sm:w-80 w-72 flex flex-col">
         <!-- Logo -->
@@ -37,7 +37,7 @@
         <div v-if="errors" class="text-error my-3 py-3 px-4 bg-errorContainer">{{ errors }}</div>
         <!-- Forgot Password Link -->
         <div class="mb-2 text-center">
-          <NuxtLink to="/forgot-password" class="text-sm text-primary">Mot de passe oublié ?</NuxtLink>
+          <NuxtLink to="/forgotten-password" class="text-sm text-primary">Mot de passe oublié ?</NuxtLink>
         </div>
     
         <!-- Connect Button -->
